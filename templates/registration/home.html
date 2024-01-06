@@ -1,0 +1,156 @@
+{% extends 'registration/base.html' %}
+
+
+{% block title %}
+
+فهرست مقاله ها
+{% endblock  %}
+
+
+{% block main %}
+{% if messages %}
+<div class="alert alert-success">
+    {% for m in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</li>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">     فهرست مقالات</h3>
+          
+          {# search bar#}
+          
+
+        <form class="form-inline mt-3" action="{% url 'accounts:search' %}">
+            <input type="text" name="s" class="form-control" palceholder="جستجو" value="{{search_title}}">
+            <button class="btn btn-success" style="padding:8px; border-radius:5px;margin-right:5px">جستجو</button>
+        </form>
+
+
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+
+                <th>عنوان</th>
+                <th>عکس</th>
+                <th>دسته‌بندی</th>
+                <th>توضیحات</th>
+                <th>نویسنده</th>
+                <th>پست‌ویژه</th>
+                <th>وضعیت</th>
+
+
+              </tr>
+            </thead>
+            <tbody>
+                {% for article in object_list %}
+                
+               
+              <tr>
+                    <td>
+                    {% if request.user.is_superuser or article.status in "DB"|make_list %}
+                        <a href="{% url 'accounts:article-update' article.pk %}">
+                          {{article.title}}
+                        </a>
+                      {% else %}
+                      {{article.title}}
+                        {% endif %}
+                    </td>
+                   
+                    <td>
+                      
+                      {% if article.photo %}
+                      <img width=100 src="{{article.photo.url}}" />
+                      {% endif %}
+                    </td>
+                    
+                    <td>{{article.get_categories}}</td>
+                    <td class="description-td">{{article.description|striptags|cut:"&nbsp;"|truncatewords:20}}</td>
+                    <td>{% firstof article.author.get_full_name article.author.get_username  %}</td>
+                    <td>
+                      {%if article.is_special%}
+                      <li class="fa fa-check-circle" style="color:green"></li>
+                      {% else %}
+                      <li class="fa fa-minus-circle" style="color:red"></li>
+                      {%endif%}
+
+                    </td>
+                   <td>
+                        {% if article.status == 'P' %}
+                        <span class="badge badge-success">
+                            منتشر
+                        </span>
+                            <a class="badge badge-prime" href={% url 'blog:detail' article.slug %} target="_blank">
+                                نمایش مقاله
+                            </a>
+
+
+                        {%elif article.status == 'B' %}
+                        <span class="badge badge-warning">
+                          برگشت داده شده
+                      </span>
+                      <a class="badge badge-secondary" href={% url 'blog:preview' article.pk %} target="_blank">
+                        پیش‌نمایش
+                    </a>
+
+
+                        {% elif article.status == 'D' %}
+                        <span class="badge badge-danger">
+                            پیش‌نویس
+                        </span>
+                        <a class="badge badge-secondary" href={% url 'blog:preview' article.pk %} target="_blank">
+                          پیش‌نمایش
+                      </a>
+
+
+                      {% else %}
+
+                      <span class="badge badge-info">
+                        در حال بررسی
+                    </span>
+
+
+                        {% endif %}
+
+
+                        {% if request.user.is_superuser or article.status in "DB"|make_list %}
+                            <br>
+                          <a class="badge badge-danger" href="{% url 'accounts:article-delete' article.pk%} ">
+                            حذف
+                          </a>
+                      
+                          {% endif %}
+                    
+                   </td>          
+              </tr>
+              {%empty%}
+              <tr>
+                <td>
+                  {% block header_title %}
+                  پستی برای نمایش وجود ندارد
+                  .
+                  اولین پست خود را
+                  <a href="{% url "accounts:article-create" %}" class="blue"> ایجاد
+                  </a>
+                    کنید
+                    .
+                  {% endblock header_title %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+
+{% endblock  %}

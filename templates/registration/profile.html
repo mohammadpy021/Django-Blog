@@ -1,0 +1,52 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{%block main%}
+<form method="post" enctype= "multipart/form-data"  >{% csrf_token %}
+    <div class="col-6">
+        {{ form.username|as_crispy_field }}
+
+     </div>
+    <div class="row">
+            <div class="col-6">
+                {{ form.first_name|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.last_name|as_crispy_field }}
+            </div>
+            
+    </div>
+ 
+   
+    <div class="row">
+        <div class="col-6">
+            <p class="badge bg-warning p-3 w-25"> <a href="{% url 'password_change' %}"> تغییر گذرواژه </a> </p>
+          </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-6">
+            {{ form.special_user|as_crispy_field }}
+
+          </div>
+        <div class="col-6">
+            {{ form.email|as_crispy_field }}
+           
+        </div>
+    </div>
+    <div class="col-12">
+       
+        {{ form.is_author|as_crispy_field }}
+    </div>
+    
+    <div class="row">
+        <div class="col-6">
+            <input class="btn bg-success w-25" type="submit" value="ذخیره">
+          </div>
+    </div>
+    
+    {% comment %} <a class="btn bg-danger" href="{% url 'password_change' %}">تغییر گذرواژه</a> {% endcomment %}
+</form>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'registration/base.html' %}
+
+
+{% block title %}
+
+سایت جنگو
+{% endblock  %}
+
+
+{% block main %}
+
+
+<div class="col-8 text-center mx-auto">
+    <div class="card card-danger ">
+        <div class="card-header  ">
+            <h3 class="card-title mb-0 float-left ">حذف مقاله</h3>
+
+        </div>
+                <!-- /.card-header -->
+            <div class="card-body  bg-light table-responsive py-4">
+            
+
+                <form method="post">{% csrf_token %}
+                    <p>آیا واقعا میخواهید (({{ object }}))
+                        از(({%firstof object.author.get_full_name object.author%}))
+                        
+                        پاک کنید؟</p>
+                    {{ form }}
+                    <input class="btn danger badge-danger" type="submit" value="حذف">
+                </form>
+
+
+           
+            <!-- /.card-body -->
+            </div>
+        <!-- /.card -->
+    </div>
+    
+</div>
+
+{% endblock  %}

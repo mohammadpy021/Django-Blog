@@ -1,0 +1,7 @@
+{% extends 'blog/list.html' %}
+{% block search_title %}
+{% if  search_title not in "" %}
+<span> جست جو برای : </span>{{ search_title }}
+{% endif %}
+
+{% endblock search_title %}

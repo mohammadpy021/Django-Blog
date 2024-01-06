@@ -1,0 +1,107 @@
+{% extends 'blog/base.html' %}
+{% load jformat %}
+{% load static %}
+{#% load ratings %#}
+{% load base_tags %}
+{% load humanize %}
+{% load i18n %}
+
+{% block header %}
+<header class="masthead" style="background-image: url({% static 'blog/assets/img/home-bg.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>{% translate 'سایت جنگو' %}</h1>
+                    
+                    <span class="subheading">{% translate "یک سایت نوشته شده با جنگو" %}</span>
+                    {% block search_title %}{% endblock search_title %}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+</header>
+{% endblock header %}
+
+{% block main_content %}
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            
+            
+            <!-- Post preview-->
+            
+            {% comment %} {% for category in categories %} {% endcomment %}
+            {% comment %} category.articles.all%  -> this will get unPublished(draft) post.{% endcomment %}
+            {% comment %} {%for article in categories.articles.published%} {% endcomment %}
+            {%for article in object_list%}
+        
+            <div class="post-preview">
+                <a href="{% url 'blog:detail' article.slug %}">
+                    <h2 class="post-title"> {{article.title}} 
+
+                        {% if article.is_special %}
+                        <span class="badge bg-danger" style="font-size:1.1rem">ویژه</span>
+                        {% endif %}
+                    </h2>
+                    
+                </a>
+                {#% ratings article %#}
+                <p class="post-subtitle">{{article.description|striptags|truncatewords:50}}</p>
+                <p class="post-meta">
+                    Posted by
+                    {% comment %}  Author {% endcomment %}
+                    <a href="{% url 'blog:author' article.author.username %}">{{article.author}}</a>
+                    {% comment %} {{article.created_at|jformat:"%Y/%m/%d"}} {% endcomment %}
+                    {{article.created_at|naturaltime}}
+
+                    
+                    
+                    {% comment %} TODO: we can put condition if update_Time> Created time {% endcomment %}
+                    
+                
+                </p>
+                <p class="post-tags">
+                    {% for cat in article.category.active %}
+                    <a href="{% url 'blog:category' cat.slug %}"> {{cat}}#  </a>
+                    {% endfor %}
+                </p>
+                
+                    
+                
+                
+                
+            </div>
+            {% empty %}
+            هنور پستی منتشر نشده است
+            {% endfor %}
+
+            {% comment %} {% endfor %} {% endcomment %}
+            <!-- Divider-->
+            <hr class="my-4" />
+            <!-- Pager-->
+            <div class="d-flex  justify-content-end mb-4">
+                
+
+                {%if page_obj.has_previous%}
+                {% comment %} <a class="me-2" href="?page={{page_obj.previous_page_number}}">previous</a> {% endcomment %}
+                <a class="me-2" href="?{% url_replace request 'page' page_obj.previous_page_number %}">قبلی</a>
+                {% endif %}
+                <p> صفحه {{page_obj.number}} از {{page_obj.paginator.num_pages }} </p>
+                
+                {%if page_obj.has_next%}
+                {% comment %} <a class="me-2" href="?page={{page_obj.next_page_number}}">next  </a> {% endcomment %}
+                <a class="me-2" href="?{% url_replace request 'page' page_obj.next_page_number %}">بعدی</a>
+                {% comment %} <a class="me-2" href="?page={{page_obj.paginator.num_pages}}"> Last:{{page_obj.paginator.num_pages}}</a> {% endcomment %}
+                <a class="me-2" href="?{% url_replace request 'page' page_obj.paginator.num_pages %}"> اخرین صفحه:{{page_obj.paginator.num_pages}}</a>
+                
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main_content %}
+

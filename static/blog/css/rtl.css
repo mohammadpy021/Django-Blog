@@ -1,0 +1,64 @@
+body{
+    direction: rtl;
+}
+.navbar-expand-lg .navbar-nav{
+    margin-right: auto;
+    margin-left: initial !important;
+}
+.post-meta{
+    text-align: left;
+}
+
+
+
+/* navigation */
+#nav {
+    list-style:none inside;
+    margin:0;
+    padding:0;
+    text-align:center;
+    }
+    #nav li {
+    display:block;
+    position:relative;
+    float:left;
+    /* background: #000000; menu background color */
+    }
+    #nav li a {
+    display:block;
+    padding:0;
+    text-decoration:none;
+    width:200px; /* this is the width of the menu items */
+    line-height:35px; /* this is the hieght of the menu items */
+    color:#ffffff; /* list item font color */
+    }
+    #nav li li a {font-size:80%;} /* smaller font size for sub menu items */
+    #nav li:hover {background:#003f20;} /* highlights current hovered list item and the parent list items when hovering over sub menues */
+    #nav ul {
+    position:absolute;
+    padding:0;
+    left:0;
+    display:none; /* hides sublists */
+    }
+    #nav li:hover ul ul {display:none;} /* hides sub-sublists */
+    #nav li:hover ul {display:block;} /* shows sublist on hover */
+    #nav li li:hover ul {
+    display:block; /* shows sub-sublist on hover */
+    margin-left:200px; /* this should be the same width as the parent list item */
+    margin-top:-35px; /* aligns top of sub menu with top of list item */
+    }
+
+    .popular_articles{
+        border: 1px solid #bfbfbf;
+        padding: 15px;
+        border-radius: 5px;
+       margin:20px 20px;
+        
+        box-shadow: -5px 5px #d5d5d5;
+    }
+    .sidebar_parent{
+        position: absolute;
+        left: 0px;
+       /* top:0; */
+
+    }
