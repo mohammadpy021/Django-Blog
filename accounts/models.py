@@ -5,7 +5,7 @@ from django_jalali.db import models as jmodels
 from django.utils import timezone
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True, verbose_name="ایمیل")
+    email = models.EmailField(unique=True)
     is_author = models.BooleanField(default=False, verbose_name="وضعیت‌‌نویسندگی")
     special_user = jmodels.jDateTimeField(default=timezone.now, verbose_name="کاربر ویژه تا")
     def is_special_user(self):
