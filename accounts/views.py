@@ -8,7 +8,10 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordRes
 from blog.models import Member
 from .models import User
 from .mixins import FormValidMixin, FieldMixin, AccessMixin, DeleteMixin, AuthorsAccess, RedirectUserLoggedInMixin
-from .forms import ProfileForm, SignupForm, ArticleForm
+from .forms import (ProfileForm,
+                    SignupForm,
+                    # ArticleForm
+                                )
 from django.shortcuts import redirect
 from django.contrib.messages.views import SuccessMessageMixin
 #mail confirm
