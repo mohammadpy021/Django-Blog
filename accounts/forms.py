@@ -26,13 +26,13 @@ class ProfileForm(ModelForm):
                 "is_author"
                 ]   
 
-class ArticleForm(ModelForm): 
-    def __init__(self, *args, **kwargs):
-        super(ArticleForm, self).__init__(*args, **kwargs)  
-        # self.fields['author'].queryset = User.objects.filter(Q(is_author=True)| Q(is_superuser = True))        
-    class Meta: 
-        model = Member
-        fields = ["title", "description", "slug", "category", "is_special", "photo", "status"]
+# class ArticleForm(ModelForm): 
+#     # def __init__(self, *args, **kwargs):
+#     #     super(ArticleForm, self).__init__(*args, **kwargs)  
+#     #     # self.fields['author'].queryset = User.objects.filter(Q(is_author=True)| Q(is_superuser = True))        
+#     class Meta: 
+#         model = Member
+#         fields = ["title", "description", "slug", "category", "is_special", "photo", "status"]
 
    
 class SignupForm(UserCreationForm):
