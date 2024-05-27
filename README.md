@@ -23,7 +23,7 @@ source venv\bin\activate
 ### Windows 
 ``` console
 py  -m venv venv
-venv\Script\activate
+.\venv\Scripts\activate
 ```
 # install packages 
 ``` console
