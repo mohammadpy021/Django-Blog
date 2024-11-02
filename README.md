@@ -1,5 +1,3 @@
-# django project for univeristy
-
 # creating Virtual environment 
 ### Linux 
 ``` console
